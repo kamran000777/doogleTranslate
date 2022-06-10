@@ -8,7 +8,7 @@ const copys = document.querySelectorAll('.fa-copy');
 const speaks = document.querySelectorAll('.fa-volume-up');
 
 
-
+//adding options to the each select tag and making English and Hindi the default lang
 const languageArr = Object.values(countries);
 selects.forEach((select, id) => {
   let option;
@@ -26,10 +26,12 @@ selects.forEach((select, id) => {
   select.innerHTML = option;
 });
 
+//handleing the translate request
 translate_btn.addEventListener('click',(e)=>{
       translatedData();
 })
 
+//exchanging the text and the select value
 exchange_icon.addEventListener('click',()=>{
       
       let tempSelect = selects[0].value; 
@@ -41,6 +43,7 @@ exchange_icon.addEventListener('click',()=>{
       text_translated.value = tempText;
 })
 
+//fetching the translate request
 function translatedData(){
       const translateFrom = selects[0].value;
       const translateTo = selects[1].value;
@@ -50,10 +53,14 @@ function translatedData(){
        console.log(text_to_translate.value)
       fetch(apiUrl).then(res=>res.json()).then(res=>displayResult(res.responseData)).catch((err)=>console.log(err))
 }
+
+
+//displaying the result in the second field
 function displayResult(result){
   text_translated.value =result.translatedText;
 }
 
+//enabling the copy icons to copy the relavant textarea input feild value
 copys.forEach((copy,index)=>{
       if(index==0){
             copy.addEventListener('click',()=>{
@@ -67,6 +74,8 @@ copys.forEach((copy,index)=>{
             })  
       }
 })
+
+//enabling the speak icons to speak the relavant textarea input by using the web speech api
 speaks.forEach((element,index)=>{
       element.addEventListener('click',()=>{
             let utterance;
